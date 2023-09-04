@@ -3,6 +3,9 @@ import "./globals.css"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import { dark } from "@clerk/themes"
+import Navbar from "@/components/layout/navbar"
+import Footer from "@/components/layout/footer"
+import LeftAside from "@/components/layout/left-aside"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -27,7 +30,10 @@ export default function RootLayout({
                 className="dark"
             >
                 <body className={inter.className}>
+                    <Navbar />
+                    <LeftAside />
                     <main>{children}</main>
+                    <Footer />
                 </body>
             </html>
         </ClerkProvider>

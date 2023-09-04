@@ -23,12 +23,19 @@ module.exports = {
                 background: "hsl(var(--background))",
                 foreground: "hsl(var(--foreground))",
                 primary: {
-                    DEFAULT: "hsl(var(--primary))",
+                    500: "hsl(var(--primary-500))",
+                    400: "hsl(var(--primary-400))",
                     foreground: "hsl(var(--primary-foreground))",
                 },
                 secondary: {
-                    DEFAULT: "hsl(var(--secondary))",
-                    foreground: "hsl(var(--secondary-foreground))",
+                    400: "hsl(var(--secondary-400))",
+                    300: "hsl(var(--secondary-300))",
+                },
+                neutral: {
+                    900: "hsl(var(--neutral-900))",
+                    800: "hsl(var(--neutral-800))",
+                    700: "hsl(var(--neutral-700))",
+                    100: "hsl(var(--neutral-100))",
                 },
                 destructive: {
                     DEFAULT: "hsl(var(--destructive))",
@@ -50,6 +57,7 @@ module.exports = {
                     DEFAULT: "hsl(var(--card))",
                     foreground: "hsl(var(--card-foreground))",
                 },
+                glassmorphism: "rgba(16, 16, 18, 0.60)",
             },
             fontSize: {
                 900: "var(--fs-900)",
