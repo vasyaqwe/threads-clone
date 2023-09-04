@@ -3,9 +3,10 @@ import "./globals.css"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import { dark } from "@clerk/themes"
-import Navbar from "@/components/layout/navbar"
-import Footer from "@/components/layout/footer"
-import LeftAside from "@/components/layout/left-aside"
+import { Navbar } from "@/components/layout/navbar"
+import { BottomNavbar } from "@/components/layout/bottom-navbar"
+import { LeftAside } from "@/components/layout/left-aside"
+import { RightAside } from "@/components/layout/right-aside"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -29,11 +30,16 @@ export default function RootLayout({
                 lang="en"
                 className="dark"
             >
-                <body className={inter.className}>
+                <body
+                    className={`${inter.className} [--navbar-height:64px] lg:[--navbar-height:75px]`}
+                >
                     <Navbar />
-                    <LeftAside />
-                    <main>{children}</main>
-                    <Footer />
+                    <div className="flex">
+                        <LeftAside />
+                        <main className="flex-1">{children}</main>
+                        <RightAside />
+                    </div>
+                    <BottomNavbar />
                 </body>
             </html>
         </ClerkProvider>
