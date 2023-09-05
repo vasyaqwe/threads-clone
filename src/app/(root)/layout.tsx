@@ -1,5 +1,5 @@
+import "../globals.css"
 import { ClerkProvider } from "@clerk/nextjs"
-import "./globals.css"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import { dark } from "@clerk/themes"
@@ -31,7 +31,7 @@ export default function RootLayout({
                 className="dark"
             >
                 <body
-                    className={`${inter.className} [--navbar-height:64px] lg:[--navbar-height:75px]`}
+                    className={`${inter.className} bg-black [--navbar-height:64px] lg:[--navbar-height:75px]`}
                 >
                     <Navbar />
                     <div className="flex">
