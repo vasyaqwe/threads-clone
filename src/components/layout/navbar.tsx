@@ -14,7 +14,7 @@ export function Navbar() {
         <nav className="z-[2] flex h-[var(--navbar-height)] w-full items-center justify-between bg-neutral-900 px-4 ">
             <Link
                 href={"/"}
-                className="flex items-center gap-3 text-700 font-bold"
+                className="text-size-700 flex items-center gap-3 font-bold"
             >
                 <Image
                     src={"/logo.svg"}
