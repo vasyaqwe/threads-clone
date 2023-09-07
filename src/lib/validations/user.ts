@@ -2,8 +2,7 @@ import * as z from "zod"
 
 export const userSchema = z.object({
     fullName: z.string().nonempty({ message: "Required" }),
-    image: z.string().url(),
-    email: z.string().email({ message: "Email must be of valid format" }),
+    image: z.custom<FileList>((val) => val instanceof FileList, "Required"),
     username: z
         .string()
         .min(3, {

@@ -4,7 +4,10 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import { dark } from "@clerk/themes"
 
-const inter = Inter({ subsets: ["latin"] })
+const primary = Inter({
+    subsets: ["latin"],
+    variable: "--font-primary",
+})
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -26,7 +29,7 @@ export default function RootLayout({
                 lang="en"
                 className="dark"
             >
-                <body className={`${inter.className} bg-black`}>
+                <body className={`${primary.variable} font-primary bg-black`}>
                     <main className="flex-1">{children}</main>
                 </body>
             </html>

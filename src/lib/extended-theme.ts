@@ -1,6 +1,9 @@
 import { type Config } from "tailwindcss"
 
 export const extendedTheme = {
+    fontFamily: {
+        primary: "var(--font-primary)",
+    },
     screens: {
         xs: "456px",
     },
