@@ -16,12 +16,16 @@ import {
 import { Input } from "@/components/ui/input"
 import { Icons } from "../ui/icons"
 import Image from "next/image"
+import { useUploadThing } from "@/lib/uploadthing"
+import { userProfileSchema } from "@/lib/validations/user-profile"
+import { Textarea } from "../ui/textarea"
 
 export function UserProfile() {
     const user = {}
+    const { startUpload } = useUploadThing("imageUploader")
 
-    const form = useForm<z.infer<typeof userSchema>>({
-        resolver: zodResolver(userSchema),
+    const form = useForm<z.infer<typeof userProfileSchema>>({
+        resolver: zodResolver(userProfileSchema),
         defaultValues: {
             image: undefined,
             fullName: "",
@@ -30,10 +34,11 @@ export function UserProfile() {
         },
     })
 
-    function onSubmit(values: z.infer<typeof userSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
+    async function onSubmit(values: z.infer<typeof userProfileSchema>) {
+        const imageUploaded = await startUpload(values.image)
+        if (imageUploaded && imageUploaded[0]?.url) {
+            // values.image = imageUploaded[0].url
+        }
     }
 
     return (
@@ -41,7 +46,7 @@ export function UserProfile() {
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-8"
+                    className="grid gap-4"
                 >
                     <FormField
                         control={form.control}
@@ -55,9 +60,38 @@ export function UserProfile() {
                                         {...field}
                                     />
                                 </FormControl>
-                                <FormDescription>
-                                    Choose a unique username.
-                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="fullName"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Full name</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        placeholder="John Doe"
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="bio"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Bio</FormLabel>
+                                <FormControl>
+                                    <Textarea
+                                        placeholder="Your bio"
+                                        {...field}
+                                    />
+                                </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -65,26 +99,26 @@ export function UserProfile() {
                     <FormField
                         control={form.control}
                         name="image"
-                        render={({ field: { onChange, value }, ...field }) => {
+                        render={({ field }) => {
                             return (
                                 <FormItem>
                                     <FormLabel>Profile image</FormLabel>
                                     <div className="flex items-center gap-3">
-                                        {!value ? (
+                                        {!field.value ? (
                                             <Icons.profile />
                                         ) : (
                                             <Image
                                                 className="h-[40px] w-fit min-w-[40px] rounded-full object-cover"
                                                 width={40}
                                                 height={40}
-                                                alt={
-                                                    field.formState
-                                                        .defaultValues
-                                                        ?.fullName ?? ""
+                                                alt={""}
+                                                src={
+                                                    field.value[0]
+                                                        ? URL.createObjectURL(
+                                                              field.value[0]
+                                                          )
+                                                        : ""
                                                 }
-                                                src={URL.createObjectURL(
-                                                    value[0]
-                                                )}
                                             />
                                         )}
                                         <FormControl>
@@ -104,10 +138,9 @@ export function UserProfile() {
 
                                                     const newFiles =
                                                         dataTransfer.files
-                                                    onChange(newFiles)
+                                                    field.onChange(newFiles)
                                                 }}
                                                 type="file"
-                                                {...field}
                                             />
                                         </FormControl>
                                     </div>
@@ -118,7 +151,7 @@ export function UserProfile() {
                         }}
                     />
                     <Button
-                        className="w-full"
+                        className="mt-5 w-full"
                         type="submit"
                     >
                         Submit

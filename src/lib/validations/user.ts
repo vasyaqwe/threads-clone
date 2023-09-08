@@ -2,7 +2,7 @@ import * as z from "zod"
 
 export const userSchema = z.object({
     fullName: z.string().nonempty({ message: "Required" }),
-    image: z.custom<FileList>((val) => val instanceof FileList, "Required"),
+    imageUrl: z.string().url().nonempty(),
     username: z
         .string()
         .min(3, {
@@ -12,5 +12,11 @@ export const userSchema = z.object({
             message: "Username must be no more than 14 characters",
         })
         .nonempty({ message: "Required" }),
-    bio: z.string(),
+    password: z.string().min(6, {
+        message: "Password must be at least 6 characters",
+    }),
+    bio: z.string().nonempty({ message: "Required" }),
+    threads: z.any(),
+    onboarded: z.boolean().default(false),
+    communities: z.any(),
 })
